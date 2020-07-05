@@ -40,7 +40,7 @@ module.exports = (app, passport) => {
     router.patch("/productUpdate/:id",isAuthenticated,upload.single('imageUrl'),products.productUpdate);
     router.delete("/deleteProducts/:id",isAuthenticated,products.deleteProducts);
     router.patch("/addToCart/:id",products.addtoCart);
-    router.patch("/addOrder/:id",isAuthenticated,products.order);
-    router.get("/getAllOrders",isAuthenticated,products.getAllOrders);
+    router.patch("/addOrder/:id",products.order);
+    router.get("/getAllOrders",products.getAllOrders);
     return router;
 }

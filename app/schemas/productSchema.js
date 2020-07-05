@@ -18,8 +18,8 @@ const productSchemaStructure = new mongoose.Schema({
         default:'false'
     },
     isOrdered:{
-        type:Boolean,
-        default:false
+        type:String,
+        default:'false'
     },
     imageUrl: {
         type: String,

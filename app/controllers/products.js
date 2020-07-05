@@ -136,7 +136,7 @@ module.exports = {
     getAllOrders: async (req, res) => {
         try {
             const allOrders = await Product.find({
-                isOrdered: true
+                isOrdered: 'true'
             });
 
             if (allOrders && Object.keys(allOrders).length > 0) {
