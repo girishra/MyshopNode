@@ -33,10 +33,14 @@ module.exports = (app, passport) => {
     //user routes
     router.post("/signup", user.signUp);
     router.post("/login",user.login);
-    router.post("/create/product",isAuthenticated,upload.any('imageUrl'),products.addProduct);
+    router.post("/create/product",upload.any('imageUrl'),products.addProduct);
     router.get("/getAllProducts",products.getAllProducts);
-    router.get("/getProductById/:id",isAuthenticated,products.getProductById);
+    router.get("/getAllCartProducts",products.getCartItems);
+    router.get("/getProductById/:id",products.getProductById);
     router.patch("/productUpdate/:id",isAuthenticated,upload.single('imageUrl'),products.productUpdate);
     router.delete("/deleteProducts/:id",isAuthenticated,products.deleteProducts);
+    router.patch("/addToCart/:id",products.addtoCart);
+    router.patch("/addOrder/:id",isAuthenticated,products.order);
+    router.get("/getAllOrders",isAuthenticated,products.getAllOrders);
     return router;
 }

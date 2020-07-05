@@ -13,6 +13,14 @@ const productSchemaStructure = new mongoose.Schema({
         type:String,
         default: null
     },
+    cartItem:{
+        type:String,
+        default:'false'
+    },
+    isOrdered:{
+        type:Boolean,
+        default:false
+    },
     imageUrl: {
         type: String,
         default: null

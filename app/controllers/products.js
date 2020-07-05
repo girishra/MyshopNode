@@ -101,4 +101,68 @@ module.exports = {
           res.status(400).send({error:"Invalid updates"})
         });
   },
+    getCartItems: async (req, res) => {
+        try {
+            const cart = await Product.find({
+                cartItem: 'true'
+            });
+
+            if (cart && Object.keys(cart).length > 0) {
+                return response.success(res, cart, { message: 'cart-details' });
+            } else {
+                return response.error(res, { message: 'No product found' });
+            }
+        } catch (error) {
+            return response.error(res, error);
+        }
+    },
+    addtoCart: async (req, res) => {
+        const updates=Object.keys(req.body)
+        const allowedUpdates=['cartItem']
+        const isValidOperation=updates.every((update)=>allowedUpdates.includes(update))
+        if(!isValidOperation){
+            res.status(400).send({error:"Invalid updates"})
+        }
+        try {
+            const cartItem=await Product.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+            if(!cartItem){
+                return res.status(404).send()
+            }
+            return response.success(res, cartItem,{ info: "successfully add to cart" })
+        } catch (error) {
+            return response.error(res, error);
+        }
+    },
+    getAllOrders: async (req, res) => {
+        try {
+            const allOrders = await Product.find({
+                isOrdered: true
+            });
+
+            if (allOrders && Object.keys(allOrders).length > 0) {
+                return response.success(res, allOrders, { message: 'orders-details' });
+            } else {
+                return response.error(res, { message: 'No order found' });
+            }
+        } catch (error) {
+            return response.error(res, error);
+        }
+    },
+    order: async (req, res) => {
+        const updates=Object.keys(req.body)
+        const allowedUpdates=['isOrdered']
+        const isValidOperation=updates.every((update)=>allowedUpdates.includes(update))
+        if(!isValidOperation){
+            res.status(400).send({error:"Invalid updates"})
+        }
+        try {
+            const orders=await Product.findByIdAndUpdate(req.params.id,req.body,{new:true,runValidators:true})
+            if(!orders){
+                return res.status(404).send()
+            }
+            return response.success(res, orders,{ info: "successfully ordered" })
+        } catch (error) {
+            return response.error(res, error);
+        }
+    },
 };
